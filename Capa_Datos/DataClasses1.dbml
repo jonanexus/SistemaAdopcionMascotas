@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AdopcionMascotasDB1" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=AdopcionMascotasDB1;Integrated Security=True;Encrypt=False" SettingsObjectName="Capa_Datos.Properties.Settings" SettingsPropertyName="AdopcionMascotasDB1ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AdopcionesAprobadas" Member="AdopcionesAprobadas">
+    <Type Name="AdopcionesAprobadas">
+      <Column Name="AdopcionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UsuarioID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MascotaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaAdopcion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Mascotas_AdopcionesAprobadas" Member="Mascotas" ThisKey="MascotaID" OtherKey="MascotaID" Type="Mascotas" IsForeignKey="true" />
+      <Association Name="Usuarios_AdopcionesAprobadas" Member="Usuarios" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Categorias" Member="Categorias">
+    <Type Name="Categorias">
+      <Column Name="CategoriaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Categorias_Razas" Member="Razas" ThisKey="CategoriaID" OtherKey="CategoriaID" Type="Razas" />
+      <Association Name="Categorias_Mascotas" Member="Mascotas" ThisKey="CategoriaID" OtherKey="CategoriaID" Type="Mascotas" />
+      <Association Name="Categorias_ReportesPerdidos" Member="ReportesPerdidos" ThisKey="CategoriaID" OtherKey="CategoriaID" Type="ReportesPerdidos" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Donantes" Member="Donantes">
+    <Type Name="Donantes">
+      <Column Name="DonanteID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Mensaje" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FechaDonacion" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FotosMascotas" Member="FotosMascotas">
+    <Type Name="FotosMascotas">
+      <Column Name="FotoID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MascotaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Foto" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Mascotas_FotosMascotas" Member="Mascotas" ThisKey="MascotaID" OtherKey="MascotaID" Type="Mascotas" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FotosReportesPerdidos" Member="FotosReportesPerdidos">
+    <Type Name="FotosReportesPerdidos">
+      <Column Name="FotoID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReporteID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Foto" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="ReportesPerdidos_FotosReportesPerdidos" Member="ReportesPerdidos" ThisKey="ReporteID" OtherKey="ReporteID" Type="ReportesPerdidos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Razas" Member="Razas">
+    <Type Name="Razas">
+      <Column Name="RazaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CategoriaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Razas_Mascotas" Member="Mascotas" ThisKey="RazaID" OtherKey="RazaID" Type="Mascotas" />
+      <Association Name="Razas_ReportesPerdidos" Member="ReportesPerdidos" ThisKey="RazaID" OtherKey="RazaID" Type="ReportesPerdidos" />
+      <Association Name="Categorias_Razas" Member="Categorias" ThisKey="CategoriaID" OtherKey="CategoriaID" Type="Categorias" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Mascotas" Member="Mascotas">
+    <Type Name="Mascotas">
+      <Column Name="MascotaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CategoriaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RazaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Caracteristicas" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaAdopcion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FechaEncontrado" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Mascotas_AdopcionesAprobadas" Member="AdopcionesAprobadas" ThisKey="MascotaID" OtherKey="MascotaID" Type="AdopcionesAprobadas" />
+      <Association Name="Mascotas_FotosMascotas" Member="FotosMascotas" ThisKey="MascotaID" OtherKey="MascotaID" Type="FotosMascotas" />
+      <Association Name="Mascotas_SolicitudesAdopcion" Member="SolicitudesAdopcion" ThisKey="MascotaID" OtherKey="MascotaID" Type="SolicitudesAdopcion" />
+      <Association Name="Mascotas_Vacunas" Member="Vacunas" ThisKey="MascotaID" OtherKey="MascotaID" Type="Vacunas" />
+      <Association Name="Categorias_Mascotas" Member="Categorias" ThisKey="CategoriaID" OtherKey="CategoriaID" Type="Categorias" IsForeignKey="true" />
+      <Association Name="Razas_Mascotas" Member="Razas" ThisKey="RazaID" OtherKey="RazaID" Type="Razas" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Refugios" Member="Refugios">
+    <Type Name="Refugios">
+      <Column Name="RefugioID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ReportesPerdidos" Member="ReportesPerdidos">
+    <Type Name="ReportesPerdidos">
+      <Column Name="ReporteID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ReporterUsuarioID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FinderUsuarioID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NombreMascota" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CategoriaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RazaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Caracteristicas" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ComoPerdio" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="FechaReporte" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaEncontrado" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="ReportesPerdidos_FotosReportesPerdidos" Member="FotosReportesPerdidos" ThisKey="ReporteID" OtherKey="ReporteID" Type="FotosReportesPerdidos" />
+      <Association Name="Categorias_ReportesPerdidos" Member="Categorias" ThisKey="CategoriaID" OtherKey="CategoriaID" Type="Categorias" IsForeignKey="true" />
+      <Association Name="Razas_ReportesPerdidos" Member="Razas" ThisKey="RazaID" OtherKey="RazaID" Type="Razas" IsForeignKey="true" />
+      <Association Name="Usuarios_ReportesPerdidos" Member="Usuarios" ThisKey="FinderUsuarioID" OtherKey="UsuarioID" Type="Usuarios" IsForeignKey="true" />
+      <Association Name="Usuarios_ReportesPerdidos1" Member="Usuarios1" ThisKey="ReporterUsuarioID" OtherKey="UsuarioID" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SolicitudesAdopcion" Member="SolicitudesAdopcion">
+    <Type Name="SolicitudesAdopcion">
+      <Column Name="SolicitudID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UsuarioID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MascotaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaSolicitud" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaAprobacion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="Mascotas_SolicitudesAdopcion" Member="Mascotas" ThisKey="MascotaID" OtherKey="MascotaID" Type="Mascotas" IsForeignKey="true" />
+      <Association Name="Usuarios_SolicitudesAdopcion" Member="Usuarios" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="Usuarios" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuarios" Member="Usuarios">
+    <Type Name="Usuarios">
+      <Column Name="UsuarioID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NombreUsuario" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.Data.Linq.Binary" DbType="VarBinary(256) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Rol" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="FotoPerfil" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="IntentosFallidos" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClaveTemporal" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="FechaExpiracionTemporal" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Usuarios_AdopcionesAprobadas" Member="AdopcionesAprobadas" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="AdopcionesAprobadas" />
+      <Association Name="Usuarios_ReportesPerdidos" Member="ReportesPerdidos" ThisKey="UsuarioID" OtherKey="FinderUsuarioID" Type="ReportesPerdidos" />
+      <Association Name="Usuarios_ReportesPerdidos1" Member="ReportesPerdidos1" ThisKey="UsuarioID" OtherKey="ReporterUsuarioID" Type="ReportesPerdidos" />
+      <Association Name="Usuarios_SolicitudesAdopcion" Member="SolicitudesAdopcion" ThisKey="UsuarioID" OtherKey="UsuarioID" Type="SolicitudesAdopcion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Vacunas" Member="Vacunas">
+    <Type Name="Vacunas">
+      <Column Name="VacunaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MascotaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NombreVacuna" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="FechaVacuna" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Mascotas_Vacunas" Member="Mascotas" ThisKey="MascotaID" OtherKey="MascotaID" Type="Mascotas" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
